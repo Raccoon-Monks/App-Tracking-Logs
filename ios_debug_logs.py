@@ -8,7 +8,7 @@ if __name__ == "__main__":
     operating_system = ui_data.OperatingSystem()
     platforms = ui_data.Platform()
     enabled_platforms = [
-        platforms.GA4,
+        platforms.GA4_EVENTS,
         platforms.APPSFLYER
     ]
 
@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
     try:
         match (platform):
-            case platforms.GA4:
+            case platforms.GA4_EVENTS:
                 if (no_argument) or (args.pattern1 == None and args.pattern2 == None): # Only -v exists in the call
                     firebase_ios.get_event_log(number_arguments=0)
                 
@@ -39,7 +39,7 @@ if __name__ == "__main__":
             case platforms.APPSFLYER:
                 appsflyer.appsflyer()
 
-            case platforms.ADJUST | platforms.SINGULAR | platforms.GTM:
+            case platforms.ADJUST | platforms.SINGULAR | platforms.GTM | platforms.GA4_USER_PROPERTY:
                 show_custom_message(f"{ui_data.Icon.LOCK.value} {ui_data.Error.NO_SUPORT.value}")
                 sys.exit(0)
 

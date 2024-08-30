@@ -8,7 +8,8 @@ if __name__ == "__main__":
     operating_system = ui_data.OperatingSystem()
     platforms = ui_data.Platform()
     enabled_platforms = [
-        platforms.GA4,
+        platforms.GA4_EVENTS,
+        platforms.GA4_USER_PROPERTY,
         platforms.APPSFLYER,
         platforms.GTM
     ]
@@ -21,8 +22,11 @@ if __name__ == "__main__":
 
     try:
         match (platform):
-            case platforms.GA4:
+            case platforms.GA4_EVENTS:
                 firebase.no_arguments() if (no_argument) else firebase.with_arguments(args)
+
+            case platforms.GA4_USER_PROPERTY:
+                firebase.view_user_property()
 
             case platforms.GAU:
                 univesal_analytics.no_arguments() if (no_argument) else univesal_analytics.with_arguments(args)
