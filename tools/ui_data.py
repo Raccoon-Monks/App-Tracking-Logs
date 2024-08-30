@@ -81,7 +81,8 @@ class OperatingSystem:
 
 @dataclass
 class Platform:
-    GA4: str = "Google Analytics 4"
+    GA4_EVENTS: str = "GA4: Events"
+    GA4_USER_PROPERTY: str = "GA4: User Property"
     GAU: str = "Google Analytics Universal"
     APPSFLYER: str = "AppsFlyer"
     ADJUST: str = "Adjust"
