@@ -71,7 +71,8 @@ def edit_log(log: str) -> str:
 
     return log
 
-
+"""
+# RAFAEL
 def askIfList():
     viewItemListEnabled = True
     query = input("Do you want to show lists events? (N/n) for no, any other input for yes.")
@@ -79,7 +80,7 @@ def askIfList():
     if query == "N" or query == "n":
         viewItemListEnabled = False
 
-    return viewItemListEnabled
+    return viewItemListEnabled"""
 
 
 def no_arguments() -> None:
@@ -90,10 +91,10 @@ def no_arguments() -> None:
 
     re_registered_event = re.compile(r"Logging\ event:")
     screenview_event = re.compile(r'name=screen_view|name\ =\ screen_view')
-    viewItemList_event = re.compile(r'name=view_item_list')
+    # viewItemList_event = re.compile(r'name=view_item_list| name\ =\ view_item_list') # RAFAEL
     automatic_event = re.compile(r'origin=auto|origin\ =\ auto')
 
-    viewItemListEnabled = True
+    # viewItemListEnabled = True #
 
     viewItemListEnabled = askIfList()
 
@@ -102,9 +103,9 @@ def no_arguments() -> None:
         if re_registered_event.search(line, re.IGNORECASE):
             line = edit_log(line)
 
-            if viewItemList_event.search(line): 
+            """if viewItemList_event.search(line): 
                 if viewItemListEnabled:
-                    print(f"{colors.RED}{line}{colors.CLOSE}")
+                    print(f"{colors.RED}{line}{colors.CLOSE}")""" # RAFAEL
 
             if screenview_event.search(line) and not automatic_event.search(line):
                 show_log(f"{colors.BLUE}{line}{colors.CLOSE}")
