@@ -72,6 +72,16 @@ def edit_log(log: str) -> str:
     return log
 
 
+def askIfList():
+    viewItemListEnabled = True
+    query = input("Do you want to show lists events? (N/n) for no, any other input for yes.")
+
+    if query == "N" or query == "n":
+        viewItemListEnabled = False
+
+    return viewItemListEnabled
+
+
 def no_arguments() -> None:
     """Displays logs of events being logged. 
     """
@@ -80,12 +90,21 @@ def no_arguments() -> None:
 
     re_registered_event = re.compile(r"Logging\ event:")
     screenview_event = re.compile(r'name=screen_view|name\ =\ screen_view')
+    viewItemList_event = re.compile(r'name=view_item_list')
     automatic_event = re.compile(r'origin=auto|origin\ =\ auto')
+
+    viewItemListEnabled = True
+
+    viewItemListEnabled = askIfList()
 
     for line in io.TextIOWrapper(proc.stdout, encoding="utf-8"):
 
         if re_registered_event.search(line, re.IGNORECASE):
             line = edit_log(line)
+
+            if viewItemList_event.search(line): 
+                if viewItemListEnabled:
+                    print(f"{colors.RED}{line}{colors.CLOSE}")
 
             if screenview_event.search(line) and not automatic_event.search(line):
                 show_log(f"{colors.BLUE}{line}{colors.CLOSE}")
