@@ -96,7 +96,7 @@ def no_arguments() -> None:
 
     # viewItemListEnabled = True #
 
-    viewItemListEnabled = askIfList()
+    # viewItemListEnabled = askIfList()
 
     for line in io.TextIOWrapper(proc.stdout, encoding="utf-8"):
 
