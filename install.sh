@@ -137,9 +137,9 @@ function download_adb {
 
     get_OS_info
 
-    if [[ $OS_INFO == "01Linux" ]]; then
+    if [[ $OS_INFO == "Linux" ]]; then
         curl $ADB_URL_LINUX -# -L --create-dirs -o $HOME/.appTrackingLogs/platform-tools.zip -C -
-    elif [[ $OS_INFO == "01Darwin" ]]; then
+    elif [[ $OS_INFO == "Darwin" ]]; then
         curl $ADB_URL_MAC -# -L --create-dirs -o $HOME/.appTrackingLogs/platform-tools.zip -C -
     else
         echo "${ERROR_EMOJI} Você não é usuário Linux e nem Mac. Mas baixe o adb para seu sistema operacional em 'https://developer.android.com/studio/releases/platform-tools'."
