@@ -88,7 +88,6 @@ def appsflyer_logs():
     response_code = re.compile(r'response\ code')
     set_customer_user_Id = re.compile(r'setCustomerUserId')
     event_data = re.compile(r'data:\ \{')
-    simpleLog: bool = False
 
     for line in io.TextIOWrapper(proc.stdout, encoding="utf-8"):
 
