@@ -139,8 +139,8 @@ def view_user_property():
     colors = ui_data.Colors()
     proc = enable_verbose_logging()
 
-    re_set_user_property = re.compile("Setting\ user\ property:")
-    re_user_property_removed = re.compile("User\ property\ removed:")
+    re_set_user_property = re.compile(r"Setting\ user\ property:")
+    re_user_property_removed = re.compile(r"User\ property\ removed:")
 
     for line in io.TextIOWrapper(proc.stdout, encoding="utf-8"):
         if re_set_user_property.search(line, re.IGNORECASE):
