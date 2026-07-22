@@ -2,7 +2,7 @@ import io
 import re
 import subprocess
 import json
-from tools import ui_data
+from tools import ui_data, process
 from interface import show_error_message, show_log
 
 
@@ -81,7 +81,7 @@ def appsflyer_logs():
     """Print events logged by the AppsFlyer SDK.
     """
     colors = ui_data.Colors()
-    proc = subprocess.Popen("adb logcat -v time".split(" "), stdout=subprocess.PIPE)
+    proc = process.spawn("adb logcat -v time".split(" "))
 
     appf_flyer_log = re.compile(r'AppsFlyer')
     url_request = re.compile(r'url.*inapps.appsflyer.com')

@@ -4,7 +4,7 @@ import subprocess
 import sys
 import argparse
 import json
-from tools import ui_data, utils
+from tools import ui_data, utils, process
 from interface import show_log, show_error_message
 
 
@@ -22,7 +22,7 @@ def enable_verbose_logging(FA_verbose: bool = False) -> subprocess.Popen:
             subprocess.run(utils.COMMAND.FA_VERBOSE.value.split(" "))
 
         subprocess.run(utils.COMMAND.FA_SVC_VERBOSE.value.split(" "))
-        proc = subprocess.Popen(utils.COMMAND.FILTER_FA_FA_SVC.value.split(" "), stdout=subprocess.PIPE)
+        proc = process.spawn(utils.COMMAND.FILTER_FA_FA_SVC.value.split(" "))
     except Exception as error:
         show_error_message(ui_data.Error.ENABLE_VERBOSE_ANDROID.value, possible_cause=str(error))
         sys.exit(1)

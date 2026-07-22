@@ -1,7 +1,7 @@
 import io
 import re
 import subprocess
-from tools import ui_data, utils
+from tools import ui_data, utils, process
 from interface import show_log
 
 
@@ -40,7 +40,7 @@ def main():
     colors = ui_data.Colors()
 
     subprocess.run(utils.COMMAND.GTM_VERBOSE.value.split(" "))
-    proc = subprocess.Popen(utils.COMMAND.FILTER_GTM.value.split(" "), stdout=subprocess.PIPE)
+    proc = process.spawn(utils.COMMAND.FILTER_GTM.value.split(" "))
 
     re_firing_tag = re.compile(r"Executing\ firing\ tag")
     # Remember to add trigger impressions as well.

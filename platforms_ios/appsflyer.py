@@ -2,14 +2,14 @@ import io
 import re
 import subprocess
 import json
-from tools import utils, ui_data
+from tools import utils, ui_data, process
 from interface import show_log
 
 def appsflyer():
     colors = ui_data.Colors()
     command = utils.COMMAND.FILTER_APPSFLYER.value
     print(command)
-    proc = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
+    proc = process.spawn(command, shell=True)
     customer_user_id = re.compile(r'CustomerUserID:')
     send_event = re.compile(r'SEND\ Event')
     event_name = re.compile(r'eventName')

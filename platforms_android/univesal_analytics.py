@@ -3,7 +3,7 @@ import re
 import subprocess
 import sys
 import argparse
-from tools import ui_data, utils
+from tools import ui_data, utils, process
 from interface import show_log, show_error_message
 
 colors = ui_data.Colors()
@@ -17,7 +17,7 @@ def enable_verbose_logging() -> subprocess.Popen:
     """
     try:
         subprocess.run(utils.COMMAND.ENABLE_GAU_DEBUG_ANDROID.value.split(" "))
-        proc = subprocess.Popen(utils.COMMAND.FILTER_GAV4_SVC.value.split(" "), stdout=subprocess.PIPE)
+        proc = process.spawn(utils.COMMAND.FILTER_GAV4_SVC.value.split(" "))
     except Exception as error:
         show_error_message(ui_data.Error.ENABLE_VERBOSE_ANDROID.value, possible_cause=str(error))
         sys.exit(1)

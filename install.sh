@@ -94,6 +94,13 @@ function add_alias {
         echo -ne "alias tracking_ios=" >> ~/.zshrc
         echo -e \"python3 \`find \$HOME/.appTrackingLogs -iname \'ios*logs.py\' -print\`\" >> ~/.zshrc
     fi
+
+    if grep 'alias\ tracking_listener' ~/.zshrc; then
+        echo "alias tracking_listener existe no arquivo .zshrc."
+    else
+        echo -ne "alias tracking_listener=" >> ~/.zshrc
+        echo -e \"python3 \`find \$HOME/.appTrackingLogs -iname \'web*logs.py\' -print\`\" >> ~/.zshrc
+    fi
     echo -e "${CYAN}\tConcluído para zsh.${CLOSE} ${CHECK_EMOJI}"
 
     # bash
@@ -109,6 +116,13 @@ function add_alias {
     else
         echo -ne "alias tracking_ios=" >> ~/.bashrc
         echo -e \"python3 \`find \$HOME/.appTrackingLogs -iname \'ios*logs.py\' -print\`\" >> ~/.bashrc
+    fi
+
+    if grep 'alias\ tracking_listener' ~/.bashrc; then
+        echo "alias tracking_listener existe no arquivo .bashrc."
+    else
+        echo -ne "alias tracking_listener=" >> ~/.bashrc
+        echo -e \"python3 \`find \$HOME/.appTrackingLogs -iname \'web*logs.py\' -print\`\" >> ~/.bashrc
     fi
     echo -e "${CYAN}\tConcluído para bash.${CLOSE} ${CHECK_EMOJI}"
 
@@ -203,7 +217,7 @@ function install_adb {
 function completion_message {
     echo -e "\n${FINISH_EMOJI} ${GREEN}Concluído!${CLOSE}"
     echo "Reincie o terminal (fechando e abrindo novamente) para que as configurações do shell sejam recarregadas."
-    echo -e "Recarregadas as configurações, execute no seu terminal ${CYAN}'tracking_android'${CLOSE} para ver os eventos de Android ou ${CYAN}'tracking_ios'${CLOSE} para ver os eventos de iOS.\n\nEm caso de dúvidas, contate: guild mobile solutions ou janio.garcia@mediamonks.com"
+    echo -e "Recarregadas as configurações, execute no seu terminal ${CYAN}'tracking_android'${CLOSE} para ver os eventos de Android, ${CYAN}'tracking_ios'${CLOSE} para ver os eventos de iOS, ou ${CYAN}'tracking_listener'${CLOSE} para abrir a interface web (escolhe Android/iOS na tela).\n\nEm caso de dúvidas, contate: guild mobile solutions ou janio.garcia@mediamonks.com"
 }
 
 create_appTrackingLogs_folder

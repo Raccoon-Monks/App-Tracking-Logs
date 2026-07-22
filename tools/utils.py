@@ -14,6 +14,8 @@ class COMMAND(Enum):
     ENABLE_GAU_DEBUG_IOS = "xcrun simctl spawn booted log stream --level=debug --predicate \"eventMessage contains 'GoogleAnalytics'\""
     ENABLE_GAU_DEBUG_ANDROID = "adb shell setprop log.tag.GAv4-SVC DEBUG"
     FILTER_APPSFLYER = "xcrun simctl spawn booted log stream --level=debug --predicate \"eventMessage contains 'com.appsflyer' or eventMessage contains 'CustomerUserID'\""
+    LIST_ANDROID_DEVICES = "adb devices"
+    LIST_IOS_BOOTED = "xcrun simctl list devices booted"
     # LAUNCH_APP = "xcrun simctl launch <device> <bundle> <arguments>"
     # xcrun simctl launch <device> <bundle> <arguments>
     # xcrun simctl install <device> <path>

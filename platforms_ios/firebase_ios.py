@@ -2,7 +2,7 @@ import io
 import re
 import subprocess
 import sys
-from tools import ui_data, utils
+from tools import ui_data, utils, process
 from interface import show_log, show_error_message
 
 colors = ui_data.Colors()
@@ -15,7 +15,7 @@ def enable_verbose_logging() -> subprocess.Popen:
         proc (subprocess.Popen): Instance of the Popen Class.
     """
     try:
-        proc = subprocess.Popen(utils.COMMAND.GET_FIREBASE_LOG_IOS.value, shell=True, stdout=subprocess.PIPE)
+        proc = process.spawn(utils.COMMAND.GET_FIREBASE_LOG_IOS.value, shell=True)
     except Exception as error:
         show_error_message(ui_data.Error.ENABLE_VERBOSE_IOS.value, possible_cause=str(error))
         sys.exit(1)

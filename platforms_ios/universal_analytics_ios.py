@@ -3,7 +3,7 @@ import re
 import subprocess
 import sys
 import argparse
-from tools import ui_data, utils
+from tools import ui_data, utils, process
 from interface import show_log, show_error_message
 
 
@@ -14,7 +14,7 @@ def enable_verbose_logging() -> subprocess.Popen:
         proc (subprocess.Popen): Instance of the Popen class. 
     """
     try:
-        proc = subprocess.Popen(utils.COMMAND.ENABLE_GAU_DEBUG_IOS.value, shell=True, stdout=subprocess.PIPE)
+        proc = process.spawn(utils.COMMAND.ENABLE_GAU_DEBUG_IOS.value, shell=True)
 
     except Exception as error:
         show_error_message(ui_data.Error.ENABLE_VERBOSE_IOS.value, possible_cause=str(error))

@@ -1,7 +1,46 @@
+import re
+import threading
+import time
 from os import system, name as os_name
-from tools import ui_data
+from tools import ui_data, event_bus, capture_context
 
 colors = ui_data.Colors()
+
+# Strips ANSI color codes so the web UI shows clean text.
+_ANSI_RE = re.compile(r"\033\[[0-9;]*m")
+# Leading ANSI color code -> event type, mirroring the terminal color convention.
+_TYPE_BY_COLOR = {
+    colors.BLUE: "screenview",
+    colors.YELLOW: "event",
+    colors.LIGHT_GRAY: "automatic",
+    colors.GREEN: "highlight",
+    colors.RED: "error",
+}
+_event_seq = 0
+_seq_lock = threading.Lock()
+
+
+def _next_event_id() -> int:
+    global _event_seq
+    with _seq_lock:
+        _event_seq += 1
+        return _event_seq
+
+
+def _publish_event(text: str, event_type: str) -> None:
+    """Publish an event to the web bus. Best-effort: never breaks the terminal."""
+    try:
+        operating_system, platform = capture_context.get_context()
+        event_bus.publish({
+            "id": _next_event_id(),
+            "ts": time.strftime("%H:%M:%S"),
+            "os": operating_system,
+            "platform": platform,
+            "type": event_type,
+            "text": text,
+        })
+    except Exception:
+        pass
 
 
 def title(txt: str) -> None:
@@ -46,6 +85,8 @@ def show_error_message(text: str, possible_cause: str = ui_data.Error.UNKNOWN.va
         print(f"\n{ui_data.Icon.POLICE_CAR_LIGHT.value} {colors.RED}Error:{colors.CLOSE} {text}")
         if (possible_cause != ui_data.Error.UNKNOWN.value):
             print(f"\nPossible cause: {possible_cause}.")
+        message = text if possible_cause == ui_data.Error.UNKNOWN.value else f"{text} ({possible_cause})"
+        _publish_event(message, "error")
 
 
 def show_blocking_message(text: str) -> None:
@@ -57,6 +98,11 @@ def show_blocking_message(text: str) -> None:
 
 def show_log(log: str) -> None:
     print(f"{log}")
+
+    # Mirror the event to the web UI (no-op when nobody is subscribed).
+    match = re.match(r"(\033\[[0-9;]*m)", log)
+    event_type = _TYPE_BY_COLOR.get(match.group(1), "log") if match else "log"
+    _publish_event(_ANSI_RE.sub("", log).strip("\n"), event_type)
 
 
 def show_program_finished():
